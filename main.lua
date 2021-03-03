@@ -54,11 +54,13 @@ local function onChildAdded(menu)
                     if table.find(marked, object) then continue end
 
                     local current = object.AbsolutePosition.Y;
-                    if (current - start) <= holder.AbsoluteSize.Y + 3 then
+                    if (current - start) <= holder.AbsoluteSize.Y/2 then
                         table.insert(marked, object)
+                                
                         manager:SendKeyEvent(true, keys[arrow], false, nil)
-                        wait()
                         manager:SendKeyEvent(false, keys[arrow], false, nil)
+                        
+                        runService.Heartbeat:wait()
                         local idx = table.find(marked, object)
                         if idx then table.remove(marked, idx) end
                     end
