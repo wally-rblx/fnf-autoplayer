@@ -54,7 +54,10 @@ local function onChildAdded(menu)
                     if table.find(marked, object) then continue end
 
                     local current = object.AbsolutePosition.Y;
-                    if (current - start) <= holder.AbsoluteSize.Y/2 then
+                    local size = holder.AbsoluteSize.Y/2
+                    local diff = (current - start)
+
+                    if (diff <= 0.25) then
                         table.insert(marked, object)
                                 
                         manager:SendKeyEvent(true, keys[arrow], false, nil)
@@ -76,7 +79,6 @@ local function onChildAdded(menu)
     currentMaid:GiveTask(menu.AncestryChanged:connect(function(_, new)
         if (not new) or (not menu:IsDescendantOf(playerGui)) then
             currentMaid:DoCleaning()
-            
         end
     end))
 end
